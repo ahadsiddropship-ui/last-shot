@@ -1,0 +1,1095 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #080d18;
+    color: white;
+    font-family: Georgia, serif;
+    overflow-x: hidden;
+}
+
+/* BACKGROUND */
+
+.sky {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    background: #080d18;
+}
+
+.sky-layer {
+    position: absolute;
+    inset: 0;
+    transition: opacity 1s ease;
+}
+
+.storm {
+    background: linear-gradient(
+        to bottom,
+        #080d18,
+        #172438,
+        #29384b
+    );
+    opacity: 1;
+}
+
+.cloudy {
+    background: linear-gradient(
+        to bottom,
+        #687887,
+        #a1aeb2,
+        #c0b9a7
+    );
+    opacity: 0;
+}
+
+.peaceful {
+    background: linear-gradient(
+        to bottom,
+        #74b9df,
+        #b5d9e7,
+        #f4d6a0
+    );
+    opacity: 0;
+}
+
+/* SUN */
+
+.sun {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: #ffe6a3;
+    box-shadow: 0 0 90px 35px rgba(255, 218, 145, 0.3);
+    top: 18%;
+    right: 15%;
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+
+
+/* REALISTIC RAIN */
+
+.rain {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0.85;
+    transition: opacity 2s ease;
+}
+
+.raindrop {
+    position: absolute;
+    top: -120px;
+    width: 1.5px;
+    height: var(--length);
+    left: var(--left);
+    opacity: var(--opacity);
+
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(210, 230, 255, 0.85)
+    );
+
+    animation: raindrop-fall var(--speed) linear infinite;
+    animation-delay: var(--delay);
+}
+
+@keyframes raindrop-fall {
+    0% {
+        transform: translate3d(0, -120px, 0);
+    }
+
+    100% {
+        transform: translate3d(100px, 110vh, 0);
+    }
+}
+
+
+
+/* DRAMATIC LIGHTNING */
+
+.lightning {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 1;
+    animation: storm-flash 4.5s infinite;
+}
+
+.lightning-bolt {
+    position: absolute;
+    top: 0;
+    width: 12px;
+    height: 75%;
+    background: #ffffff;
+
+    filter:
+        drop-shadow(0 0 5px white)
+        drop-shadow(0 0 15px #8acbff)
+        drop-shadow(0 0 35px #65aaff);
+
+    clip-path: polygon(
+        55% 0,
+        100% 0,
+        48% 35%,
+        85% 35%,
+        0 100%,
+        32% 48%,
+        0 48%
+    );
+
+    opacity: 0;
+}
+
+.bolt-one {
+    left: 65%;
+    animation: bolt-strike 4.5s infinite;
+}
+
+.bolt-two {
+    left: 28%;
+    height: 55%;
+    transform: scaleX(-1);
+    animation: bolt-strike-two 4.5s infinite;
+}
+
+@keyframes storm-flash {
+    0%, 15%, 17%, 45%, 47%, 100% {
+        background: transparent;
+    }
+
+    15.5%, 16.5% {
+        background: rgba(220, 235, 255, 0.55);
+    }
+
+    46% {
+        background: rgba(220, 235, 255, 0.3);
+    }
+}
+
+@keyframes bolt-strike {
+    0%, 14%, 18%, 100% {
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    16% {
+        opacity: 0;
+    }
+
+    17% {
+        opacity: 0.9;
+    }
+}
+
+@keyframes bolt-strike-two {
+    0%, 45%, 48%, 100% {
+        opacity: 0;
+    }
+
+    46% {
+        opacity: 1;
+    }
+
+    47% {
+        opacity: 0;
+    }
+}
+
+
+/* CONTENT */
+
+#special-content {
+    position: relative;
+    z-index: 2;
+}
+
+.scene {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    text-align: center;
+}
+
+.scene-content {
+    max-width: 750px;
+    animation: fadeIn 2s ease;
+}
+
+.scene h1 {
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    margin: 20px 0;
+}
+
+.scene h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 25px;
+}
+
+.scene p {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    line-height: 1.8;
+    color: rgba(255,255,255,0.85);
+}
+
+.eyebrow {
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    font-size: 0.8rem !important;
+}
+
+.scroll-indicator {
+    display: inline-block;
+    margin-top: 70px;
+    font-family: Arial, sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    animation: float 2s infinite ease-in-out;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(10px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+.opening-paragraph {
+    width: min(850px, 90%);
+    padding: 35px;
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    margin: auto;
+}
+
+.opening-paragraph p {
+    font-family: Georgia, serif;
+    font-size: clamp(1.1rem, 2vw, 1.45rem);
+    line-height: 2;
+    letter-spacing: 0.3px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.95);
+    margin-bottom: 35px;
+}
+
+.opening-paragraph p:last-child {
+    margin-bottom: 0;
+}
+
+/* CONVERSATION MEMORY SECTION */
+
+.conversation-scene {
+    position: relative;
+    min-height: 100vh;
+    padding: 130px 7% 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.conversation-intro {
+    width: min(850px, 100%);
+    margin: 0 auto 100px;
+    text-align: center;
+}
+
+.conversation-intro p {
+    font-family: Georgia, serif;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    line-height: 2;
+    color: white;
+    text-shadow: 0 2px 15px rgba(0, 0, 0, 0.9);
+    margin-bottom: 35px;
+}
+
+.memory-gallery {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+}
+
+.memory {
+    display: block;
+    width: min(340px, 85vw);
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
+    transition: transform 0.4s ease;
+}
+
+.memory:hover {
+    transform: scale(1.025) rotate(0deg);
+}
+
+.memory-left {
+    align-self: flex-start;
+    transform: rotate(-2deg);
+}
+
+.memory-right {
+    align-self: flex-end;
+    transform: rotate(2deg);
+}
+
+/* THE CONNECTED JOKE */
+
+.memory-pair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+    flex-wrap: wrap;
+}
+
+.memory-pair .memory {
+    transform: rotate(-1deg);
+}
+
+.memory-pair .memory:last-child {
+    transform: rotate(1deg);
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+    .conversation-scene {
+        padding: 90px 5% 110px;
+    }
+
+    .conversation-intro {
+        margin-bottom: 70px;
+    }
+
+    .memory-gallery {
+        gap: 65px;
+    }
+
+    .memory {
+        width: min(300px, 85vw);
+    }
+
+    .memory-pair {
+        gap: 25px;
+    }
+}
+/* =========================================
+   THE VOICE NOTE LANDSCAPE
+========================================= */
+
+.voice-landscape {
+    position: relative;
+    min-height: 2100px;
+    padding: 150px 0 200px;
+    overflow: hidden;
+}
+
+.voice-landscape-intro {
+    position: relative;
+    z-index: 2;
+    width: min(700px, 85%);
+    margin: 0 auto 100px;
+    text-align: center;
+}
+
+.voice-landscape-intro p {
+    color: #fff8e8;
+    font-family: Georgia, serif;
+    font-size: clamp(1.2rem, 2vw, 1.55rem);
+    line-height: 2;
+    text-shadow: 0 2px 15px rgba(60, 45, 20, .6);
+}
+
+.voice-field {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 1750px;
+    margin: auto;
+}
+
+/* BASE VOICE NOTE */
+
+.voice-note {
+    position: absolute;
+    width: 240px;
+    z-index: 2;
+    animation: gentle-float 6s ease-in-out infinite;
+}
+
+.cassette-body {
+    position: relative;
+    width: 100%;
+    height: 145px;
+    padding: 15px;
+    border-radius: 13px;
+    background: linear-gradient(145deg, #e8d7b6, #b99b70);
+    border: 2px solid rgba(255, 255, 255, .55);
+    box-shadow:
+        0 15px 35px rgba(74, 54, 27, .3),
+        inset 0 2px 8px rgba(255, 255, 255, .7);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.cassette-holes {
+    color: rgba(75, 55, 35, .65);
+    font-size: 19px;
+    letter-spacing: 18px;
+    margin-left: 18px;
+}
+
+.note-play {
+    width: 47px;
+    height: 47px;
+    margin: 8px 0;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, .8);
+    background: rgba(255, 250, 230, .8);
+    color: #725a3b;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(70, 50, 20, .2);
+    transition: transform .25s ease, background .25s ease;
+}
+
+.note-play:hover {
+    transform: scale(1.12);
+    background: #fff8e8;
+}
+
+.cassette-line {
+    width: 75%;
+    height: 3px;
+    border-radius: 5px;
+    background: rgba(90, 65, 40, .35);
+}
+
+.voice-note audio {
+    display: none;
+    width: 100%;
+    margin-top: 12px;
+    height: 38px;
+}
+
+.voice-note.audio-open audio {
+    display: block;
+}
+
+.voice-note.audio-open {
+    z-index: 10;
+}
+
+.voice-note.audio-open .cassette-body {
+    box-shadow:
+        0 18px 40px rgba(74, 54, 27, .4),
+        0 0 25px rgba(255, 246, 200, .7);
+}
+
+/* FLOWERS */
+
+.flower-decoration {
+    position: absolute;
+    top: -28px;
+    right: -17px;
+    color: #fff1d5;
+    font-size: 55px;
+    text-shadow: 0 3px 10px rgba(120, 85, 40, .3);
+    z-index: 3;
+    transform: rotate(15deg);
+}
+
+.flower-second {
+    color: #f4c9bd;
+    top: -32px;
+    left: -20px;
+    right: auto;
+}
+
+/* BURIED MEMORIES */
+
+.buried-note {
+    transform: rotate(-8deg);
+}
+
+.buried-note::after {
+    content: "";
+    position: absolute;
+    left: -15px;
+    right: -15px;
+    bottom: -8px;
+    height: 35px;
+    background: linear-gradient(
+        to bottom,
+        rgba(145, 112, 70, .2),
+        rgba(111, 82, 48, .75)
+    );
+    border-radius: 50%;
+    filter: blur(7px);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.buried-dust {
+    position: absolute;
+    left: 5px;
+    bottom: -7px;
+    width: 95%;
+    height: 17px;
+    border-radius: 50%;
+    background: rgba(155, 120, 75, .45);
+    filter: blur(8px);
+}
+
+/* WIND-BLOWN MEMORY */
+
+.wind-note {
+    transform: rotate(17deg);
+    animation: wind-sway 5s ease-in-out infinite;
+}
+
+/* EDGE MEMORIES */
+
+.edge-left {
+    left: -105px;
+    transform: rotate(-12deg);
+}
+
+.edge-right {
+    right: -105px;
+    transform: rotate(13deg);
+}
+
+/* SPIDERWEB MEMORIES */
+
+.web-note .cassette-body {
+    background: linear-gradient(145deg, #b8b1a0, #827b6b);
+    filter: saturate(.65);
+}
+
+.spiderweb {
+    position: absolute;
+    top: -40px;
+    right: -35px;
+    color: rgba(255, 255, 255, .85);
+    font-size: 75px;
+    font-weight: 200;
+    transform: rotate(-35deg);
+    text-shadow: 0 0 5px rgba(255, 255, 255, .4);
+    z-index: 4;
+}
+
+.tiny-spider {
+    position: absolute;
+    top: -5px;
+    right: 5px;
+    font-size: 23px;
+    z-index: 5;
+    animation: spider-swing 4s ease-in-out infinite;
+    transform-origin: top center;
+}
+
+/* PLACEMENT OF ALL NINE MEMORIES */
+
+.note-one {
+    top: 50px;
+    left: 13%;
+}
+
+.note-two {
+    top: 250px;
+    left: 0;
+}
+
+.note-three {
+    top: 470px;
+    right: 13%;
+}
+
+.note-four {
+    top: 700px;
+    left: 35%;
+}
+
+.note-five {
+    top: 930px;
+    right: 5%;
+}
+
+.note-six {
+    top: 1120px;
+    left: 12%;
+}
+
+.note-seven {
+    top: 1320px;
+    right: 0;
+}
+
+.note-eight {
+    top: 1500px;
+    right: 30%;
+}
+
+.note-nine {
+    top: 1650px;
+    left: 8%;
+}
+
+/* ANIMATIONS */
+
+@keyframes gentle-float {
+    0%, 100% {
+        translate: 0 0;
+    }
+    50% {
+        translate: 0 -9px;
+    }
+}
+
+@keyframes wind-sway {
+    0%, 100% {
+        translate: 0 0;
+        rotate: 0deg;
+    }
+    50% {
+        translate: 12px -8px;
+        rotate: 4deg;
+    }
+}
+
+@keyframes spider-swing {
+    0%, 100% {
+        rotate: -8deg;
+    }
+    50% {
+        rotate: 8deg;
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+
+    .voice-landscape {
+        min-height: 1950px;
+        padding-top: 100px;
+    }
+
+    .voice-field {
+        height: 1650px;
+    }
+
+    .voice-note {
+        width: 190px;
+    }
+
+    .cassette-body {
+        height: 120px;
+    }
+
+    .note-play {
+        width: 40px;
+        height: 40px;
+    }
+
+    .note-one {
+        top: 40px;
+        left: 12%;
+    }
+
+    .note-two {
+        top: 230px;
+        left: -95px;
+    }
+
+    .note-three {
+        top: 420px;
+        right: 5%;
+    }
+
+    .note-four {
+        top: 620px;
+        left: 25%;
+    }
+
+    .note-five {
+        top: 830px;
+        right: -25px;
+    }
+
+    .note-six {
+        top: 1030px;
+        left: 5%;
+    }
+
+    .note-seven {
+        top: 1200px;
+        right: -100px;
+    }
+
+    .note-eight {
+        top: 1390px;
+        right: 12%;
+    }
+
+    .note-nine {
+        top: 1530px;
+        left: 5%;
+    }
+
+    .voice-note audio {
+        max-width: 190px;
+    }
+}/* =========================================
+   VINTAGE CASSETTE REFINEMENT
+========================================= */
+
+/* Give every cassette a more physical appearance */
+
+.cassette-body {
+    border: 2px solid rgba(255,255,255,.7);
+    box-shadow:
+        0 18px 35px rgba(65,45,25,.25),
+        inset 0 2px 5px rgba(255,255,255,.8),
+        inset 0 -5px 10px rgba(75,50,25,.12);
+    overflow: visible;
+    transition: transform .4s ease, filter .4s ease;
+}
+
+.voice-note:hover .cassette-body {
+    filter: brightness(1.06);
+}
+
+/* Inner cassette label */
+
+.cassette-body::before {
+    content: "";
+    position: absolute;
+    width: 72%;
+    height: 48px;
+    top: 13px;
+    left: 14%;
+    border-radius: 5px;
+    background: rgba(255,255,255,.16);
+    border: 1px solid rgba(255,255,255,.3);
+    pointer-events: none;
+}
+
+/* Tiny screws */
+
+.cassette-body::after {
+    content: "·";
+    position: absolute;
+    top: 7px;
+    left: 10px;
+    color: rgba(70,55,40,.65);
+    font-size: 23px;
+    text-shadow: 205px 0 rgba(70,55,40,.65);
+    pointer-events: none;
+}
+
+/* =========================================
+   NINE DIFFERENT PERSONALITIES
+========================================= */
+
+/* 1 — Warm ivory and rose */
+
+.note-one .cassette-body {
+    background: linear-gradient(145deg, #f2dfc2, #c9a77e);
+    border-color: #fff2dd;
+}
+
+.note-one .flower-decoration {
+    color: #f3b6ad;
+}
+
+/* 2 — Old faded sage */
+
+.note-two .cassette-body {
+    background: linear-gradient(145deg, #b6b99c, #777e65);
+    border-color: #e4e2c9;
+}
+
+/* 3 — Dusty brown, forgotten */
+
+.note-three .cassette-body {
+    background: linear-gradient(145deg, #c2a17b, #866a4c);
+    border-color: #e5c9a3;
+}
+
+/* 4 — Soft blush pink */
+
+.note-four .cassette-body {
+    background: linear-gradient(145deg, #f1d2c9, #c48e85);
+    border-color: #fff0e8;
+}
+
+/* 5 — Faded blue, caught in the wind */
+
+.note-five .cassette-body {
+    background: linear-gradient(145deg, #c4d5d5, #829e9f);
+    border-color: #edf5ed;
+}
+
+/* 6 — Aged stone */
+
+.note-six .cassette-body {
+    background: linear-gradient(145deg, #c2b9a5, #817966);
+    border-color: #e5dfcc;
+}
+
+/* 7 — Warm honey */
+
+.note-seven .cassette-body {
+    background: linear-gradient(145deg, #e9c98d, #b18b52);
+    border-color: #fff0cb;
+}
+
+/* 8 — Faded olive */
+
+.note-eight .cassette-body {
+    background: linear-gradient(145deg, #b7b69b, #77765e);
+    border-color: #e8e4cb;
+}
+
+/* 9 — Vintage cream */
+
+.note-nine .cassette-body {
+    background: linear-gradient(145deg, #f1e4c8, #c5ad82);
+    border-color: #fff8e8;
+}
+
+/* =========================================
+   REALISTIC SPIDERWEBS
+========================================= */
+
+.web-note {
+    position: absolute;
+}
+
+.spiderweb {
+    position: absolute;
+    width: 125px;
+    height: 115px;
+    top: -48px;
+    right: -43px;
+    z-index: 5;
+    pointer-events: none;
+
+    background:
+        repeating-conic-gradient(
+            from 0deg at 100% 0%,
+            transparent 0deg 14deg,
+            rgba(255,255,255,.85) 14.5deg 15deg,
+            transparent 15.5deg 30deg
+        ),
+        repeating-radial-gradient(
+            circle at 100% 0%,
+            transparent 0 11px,
+            rgba(255,255,255,.75) 11.5px 12.5px,
+            transparent 13px 22px
+        );
+
+    opacity: .8;
+    filter: drop-shadow(0 0 2px rgba(255,255,255,.5));
+}
+
+.web-center {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 5px;
+    height: 5px;
+    background: white;
+    border-radius: 50%;
+}
+
+.tiny-spider {
+    position: absolute;
+    top: -8px;
+    right: 4px;
+    z-index: 7;
+    font-size: 19px;
+    transform-origin: top center;
+    animation: spider-swing 4s ease-in-out infinite;
+}
+
+/* =========================================
+   BURIED CASSETTE — SAND AND DUST
+========================================= */
+
+.buried-note {
+    transform: rotate(-8deg);
+}
+
+.buried-note .cassette-body {
+    filter: sepia(.2) brightness(.9);
+}
+
+.buried-note::after {
+    content: "";
+    position: absolute;
+    left: -18px;
+    right: -18px;
+    bottom: -4px;
+    height: 48px;
+    z-index: 3;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 20% 20%,
+            rgba(185,146,96,.7) 0 5px,
+            transparent 6px
+        ),
+        radial-gradient(
+            ellipse at 70% 35%,
+            rgba(167,126,78,.7) 0 8px,
+            transparent 9px
+        ),
+        linear-gradient(
+            to bottom,
+            transparent,
+            rgba(163,124,78,.55)
+        );
+
+    filter: blur(5px);
+    border-radius: 50%;
+}
+
+/* =========================================
+   LITTLE FLOWERS AND PETALS
+========================================= */
+
+.flower-note::before {
+    content: "·  ✿  ·";
+    position: absolute;
+    bottom: -22px;
+    left: 18px;
+    color: #fff1db;
+    font-size: 23px;
+    letter-spacing: 5px;
+    opacity: .9;
+    transform: rotate(-12deg);
+    z-index: 4;
+    pointer-events: none;
+}
+
+.note-four::before {
+    content: "❀  ·";
+    color: #f4c1b4;
+    font-size: 27px;
+    left: auto;
+    right: 5px;
+    bottom: -24px;
+    transform: rotate(15deg);
+}
+
+/* =========================================
+   WIND-BLOWN CASSETTE
+========================================= */
+
+.note-five {
+    animation: wind-sway 7s ease-in-out infinite;
+}
+
+.note-five .cassette-body {
+    box-shadow:
+        0 25px 40px rgba(60,75,75,.22),
+        inset 0 2px 8px rgba(255,255,255,.8);
+}
+
+/* =========================================
+   SUBTLE DIFFERENT MOVEMENTS
+========================================= */
+
+.note-one {
+    animation: gentle-float 6s ease-in-out infinite;
+}
+
+.note-two {
+    animation: edge-drift 8s ease-in-out infinite;
+}
+
+.note-three {
+    animation: buried-stillness 7s ease-in-out infinite;
+}
+
+.note-four {
+    animation: gentle-float 7s ease-in-out infinite;
+}
+
+.note-six {
+    animation: forgotten-drift 9s ease-in-out infinite;
+}
+
+.note-eight {
+    animation: forgotten-drift 8s ease-in-out infinite reverse;
+}
+
+.note-nine {
+    animation: gentle-float 5s ease-in-out infinite;
+}
+
+@keyframes edge-drift {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 5px -7px; }
+}
+
+@keyframes buried-stillness {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -3px; }
+}
+
+@keyframes forgotten-drift {
+    0%, 100% { translate: 0 0; rotate: 0deg; }
+    50% { translate: -5px -8px; rotate: 2deg; }
+}
+
+/* Keep play buttons above decorative details */
+
+.note-play {
+    position: relative;
+    z-index: 6;
+}
